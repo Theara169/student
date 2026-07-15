@@ -1,0 +1,780 @@
+<!DOCTYPE html>
+<html lang="km">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>សូមស្វាគមន៍មកកាន់ថ្នាក់រៀន</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Khmer:wght@400;600;700;900&display=swap" rel="stylesheet" />
+    <style>
+        /* ── Reset & Base ── */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Noto Sans Khmer', sans-serif;
+            min-height: 100vh;
+            background: linear-gradient(145deg, #0f0c29, #302b63, #24243e);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        /* ── Animated Background Orbs ── */
+        .orb {
+            position: fixed;
+            border-radius: 50%;
+            filter: blur(100px);
+            opacity: 0.5;
+            pointer-events: none;
+            z-index: 0;
+            animation: floatOrb 12s ease-in-out infinite alternate;
+        }
+        .orb--1 {
+            width: 500px;
+            height: 500px;
+            background: #f093fb;
+            top: -150px;
+            right: -100px;
+            animation-delay: 0s;
+        }
+        .orb--2 {
+            width: 400px;
+            height: 400px;
+            background: #4facfe;
+            bottom: -100px;
+            left: -100px;
+            animation-delay: -4s;
+        }
+        .orb--3 {
+            width: 300px;
+            height: 300px;
+            background: #43e97b;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            animation-delay: -8s;
+            opacity: 0.2;
+        }
+
+        @keyframes floatOrb {
+            0% {
+                transform: translate(0, 0) scale(1);
+            }
+            100% {
+                transform: translate(60px, -40px) scale(1.2);
+            }
+        }
+
+        /* ── Main Container ── */
+        .container {
+            position: relative;
+            z-index: 1;
+            width: 100%;
+            max-width: 1100px;
+            padding: 30px;
+            background: rgba(255, 255, 255, 0.07);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-radius: 60px 60px 40px 40px;
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            box-shadow: 0 40px 80px rgba(0, 0, 0, 0.6), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        /* ── Header ── */
+        .header {
+            text-align: center;
+            padding: 20px 10px 30px;
+        }
+
+        .header__icon {
+            font-size: 48px;
+            display: inline-block;
+            animation: bounceIcon 2s ease-in-out infinite;
+        }
+
+        @keyframes bounceIcon {
+            0%,
+            100% {
+                transform: translateY(0);
+            }
+            50% {
+                transform: translateY(-10px);
+            }
+        }
+
+        .header__title {
+            font-size: clamp(2rem, 5vw, 3.2rem);
+            font-weight: 900;
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 40%, #4facfe 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            text-shadow: none;
+            margin-top: 8px;
+            letter-spacing: 1px;
+        }
+
+        .header__sub {
+            font-size: clamp(0.95rem, 1.6vw, 1.25rem);
+            color: rgba(255, 255, 255, 0.7);
+            font-weight: 400;
+            margin-top: 8px;
+            letter-spacing: 2px;
+        }
+
+        .header__sub span {
+            color: #f093fb;
+            font-weight: 600;
+        }
+
+        /* ── Divider ── */
+        .divider {
+            width: 120px;
+            height: 4px;
+            margin: 10px auto 0;
+            background: linear-gradient(90deg, #f093fb, #f5576c, #4facfe);
+            border-radius: 4px;
+            animation: pulseDivider 2.5s ease-in-out infinite;
+        }
+
+        @keyframes pulseDivider {
+            0%,
+            100% {
+                opacity: 0.4;
+                transform: scaleX(1);
+            }
+            50% {
+                opacity: 1;
+                transform: scaleX(1.3);
+            }
+        }
+
+        /* ── Grid: 1 Row × 4 Columns ── */
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px;
+            padding: 10px 0 20px;
+        }
+
+        /* ── Card ── */
+        .card {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            background: rgba(255, 255, 255, 0.06);
+            border-radius: 30px;
+            padding: 28px 12px 22px;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            backdrop-filter: blur(4px);
+            -webkit-backdrop-filter: blur(4px);
+            transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275),
+                box-shadow 0.4s ease, border-color 0.3s ease;
+            cursor: default;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .card::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            border-radius: 30px;
+            padding: 2px;
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.2), transparent, rgba(255, 255, 255, 0.05));
+            -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            -webkit-mask-composite: xor;
+            mask-composite: exclude;
+            pointer-events: none;
+        }
+
+        .card:hover {
+            transform: translateY(-12px) scale(1.02);
+            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.5), 0 0 40px rgba(240, 147, 251, 0.15);
+            border-color: rgba(240, 147, 251, 0.3);
+        }
+
+        /* ── Circle Image ── */
+        .card__circle {
+            width: clamp(90px, 12vw, 150px);
+            height: clamp(90px, 12vw, 150px);
+            border-radius: 50%;
+            overflow: hidden;
+            border: 4px solid rgba(255, 255, 255, 0.2);
+            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.4), inset 0 0 0 2px rgba(255, 255, 255, 0.05);
+            transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            position: relative;
+            flex-shrink: 0;
+        }
+
+        .card:hover .card__circle {
+            border-color: #f093fb;
+            box-shadow: 0 0 40px rgba(240, 147, 251, 0.3), 0 12px 30px rgba(0, 0, 0, 0.4);
+            transform: scale(1.05) rotate(-2deg);
+        }
+
+        .card__circle img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+            transition: transform 0.6s ease;
+        }
+
+        .card:hover .card__circle img {
+            transform: scale(1.1);
+        }
+
+        /* ── Glow ring behind circle ── */
+        .card__circle::after {
+            content: '';
+            position: absolute;
+            inset: -8px;
+            border-radius: 50%;
+            background: conic-gradient(from 0deg, #f093fb, #f5576c, #4facfe, #43e97b, #f093fb);
+            opacity: 0;
+            transition: opacity 0.5s ease;
+            z-index: -1;
+            filter: blur(12px);
+        }
+
+        .card:hover .card__circle::after {
+            opacity: 0.5;
+            animation: spinGlow 3s linear infinite;
+        }
+
+        @keyframes spinGlow {
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        /* ── Card Title ── */
+        .card__title {
+            font-size: clamp(0.85rem, 1.2vw, 1.2rem);
+            font-weight: 700;
+            color: #fff;
+            margin-top: 16px;
+            text-align: center;
+            line-height: 1.4;
+            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+        }
+
+        .card__title .highlight {
+            background: linear-gradient(135deg, #f093fb, #f5576c);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .card__desc {
+            font-size: clamp(0.7rem, 0.9vw, 0.9rem);
+            color: rgba(255, 255, 255, 0.55);
+            text-align: center;
+            margin-top: 6px;
+            font-weight: 400;
+            letter-spacing: 0.5px;
+        }
+
+        /* ── Card number badge ── */
+        .card__badge {
+            position: absolute;
+            top: 12px;
+            right: 14px;
+            font-size: 0.65rem;
+            font-weight: 700;
+            color: rgba(255, 255, 255, 0.2);
+            background: rgba(255, 255, 255, 0.05);
+            padding: 4px 10px;
+            border-radius: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            letter-spacing: 0.5px;
+        }
+
+        /* ── Footer ── */
+        .footer {
+            text-align: center;
+            padding: 20px 10px 8px;
+            border-top: 1px solid rgba(255, 255, 255, 0.06);
+            margin-top: 10px;
+        }
+
+        .footer p {
+            color: rgba(255, 255, 255, 0.35);
+            font-size: 0.8rem;
+            letter-spacing: 1px;
+        }
+
+        .footer p .heart {
+            color: #f5576c;
+            display: inline-block;
+            animation: heartBeat 1.4s ease-in-out infinite;
+        }
+
+        @keyframes heartBeat {
+            0%,
+            100% {
+                transform: scale(1);
+            }
+            15% {
+                transform: scale(1.3);
+            }
+            30% {
+                transform: scale(1);
+            }
+            45% {
+                transform: scale(1.2);
+            }
+            60% {
+                transform: scale(1);
+            }
+        }
+
+        /* ── Custom Alert Modal ── */
+        .modal-overlay {
+            position: fixed;
+            inset: 0;
+            z-index: 9999;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(0, 0, 0, 0.65);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.5s ease;
+            padding: 20px;
+        }
+
+        .modal-overlay.active {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        .modal {
+            background: linear-gradient(145deg, #1e1b4b, #2d2a5e);
+            border-radius: 40px;
+            padding: 40px 48px 36px;
+            max-width: 520px;
+            width: 100%;
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            box-shadow: 0 60px 120px rgba(0, 0, 0, 0.8), 0 0 80px rgba(240, 147, 251, 0.08);
+            transform: scale(0.9) translateY(30px);
+            transition: transform 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275),
+                opacity 0.5s ease;
+            opacity: 0;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .modal::before {
+            content: '';
+            position: absolute;
+            inset: -2px;
+            border-radius: 42px;
+            padding: 2px;
+            background: linear-gradient(135deg, #f093fb, #f5576c, #4facfe, #43e97b);
+            -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            -webkit-mask-composite: xor;
+            mask-composite: exclude;
+            pointer-events: none;
+        }
+
+        .modal-overlay.active .modal {
+            transform: scale(1) translateY(0);
+            opacity: 1;
+        }
+
+        .modal__icon {
+            font-size: 64px;
+            display: block;
+            margin-bottom: 12px;
+            animation: bounceIcon 2s ease-in-out infinite;
+        }
+
+        .modal__title {
+            font-size: 1.6rem;
+            font-weight: 900;
+            color: #fff;
+            margin-bottom: 8px;
+            background: linear-gradient(135deg, #f093fb, #f5576c);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .modal__message {
+            font-size: 1.15rem;
+            color: rgba(255, 255, 255, 0.9);
+            line-height: 1.8;
+            font-weight: 500;
+            padding: 12px 0 8px;
+        }
+
+        .modal__message .emoji {
+            font-size: 1.6rem;
+            display: inline-block;
+        }
+
+        .modal__btn {
+            margin-top: 24px;
+            padding: 14px 44px;
+            border: none;
+            border-radius: 60px;
+            font-family: 'Noto Sans Khmer', sans-serif;
+            font-size: 1rem;
+            font-weight: 700;
+            color: #fff;
+            background: linear-gradient(135deg, #f093fb, #f5576c);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 8px 32px rgba(245, 87, 108, 0.3);
+            letter-spacing: 1px;
+        }
+
+        .modal__btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 12px 48px rgba(245, 87, 108, 0.5);
+        }
+
+        .modal__btn:active {
+            transform: scale(0.95);
+        }
+
+        /* ── Click hint ── */
+        .click-hint {
+            text-align: center;
+            margin-top: 16px;
+            color: rgba(255, 255, 255, 0.2);
+            font-size: 0.75rem;
+            letter-spacing: 2px;
+            animation: pulseHint 2.5s ease-in-out infinite;
+            cursor: default;
+        }
+
+        @keyframes pulseHint {
+            0%,
+            100% {
+                opacity: 0.2;
+            }
+            50% {
+                opacity: 0.7;
+            }
+        }
+
+        /* ── Responsive ── */
+        @media (max-width: 992px) {
+            .grid {
+                gap: 16px;
+            }
+            .container {
+                padding: 20px;
+                border-radius: 40px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 18px;
+            }
+
+            .container {
+                padding: 16px;
+                border-radius: 30px;
+            }
+
+            .header {
+                padding: 10px 0 20px;
+            }
+
+            .modal {
+                padding: 32px 24px 28px;
+            }
+
+            .modal__message {
+                font-size: 1rem;
+            }
+
+            .card {
+                padding: 20px 8px 16px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 12px;
+            }
+
+            .card__circle {
+                width: 70px;
+                height: 70px;
+            }
+
+            .card__title {
+                font-size: 0.75rem;
+            }
+
+            .card__desc {
+                font-size: 0.6rem;
+            }
+
+            .modal {
+                padding: 24px 16px 22px;
+            }
+
+            .modal__icon {
+                font-size: 44px;
+            }
+
+            .modal__title {
+                font-size: 1.2rem;
+            }
+
+            .modal__message {
+                font-size: 0.9rem;
+            }
+
+            .modal__btn {
+                padding: 12px 32px;
+                font-size: 0.85rem;
+            }
+
+            .container {
+                padding: 12px;
+                border-radius: 24px;
+            }
+        }
+
+        @media (max-width: 380px) {
+            .grid {
+                gap: 8px;
+            }
+            .card__circle {
+                width: 60px;
+                height: 60px;
+                border-width: 3px;
+            }
+            .card {
+                padding: 14px 4px 12px;
+                border-radius: 20px;
+            }
+        }
+        .click-hint{
+            padding: 10px 20px;
+            font-family: sans-serif;
+            border: none;
+            border-radius: 5px;
+            background-color: #4facfe;
+            align-items: center;
+            text-align: center;
+            color: white;
+            justify-content: center;
+
+            
+        }
+        .click-hint:hover{
+            background-color: #f093fb;
+        }
+        
+           
+  /* Make it a circle */
+  
+ .header__icon {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  overflow: hidden;
+  flex-shrink: 0;
+  border: 2px solid #ffffff;        /* White border */
+  box-shadow: 0 2px 8px rgba(0,0,0,0.15); /* Subtle shadow */
+}
+.header__icon img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+
+
+            
+        
+    </style>
+</head>
+<body>
+
+    <!-- ─── Animated Orbs ─── -->
+    <div class="orb orb--1"></div>
+    <div class="orb orb--2"></div>
+    <div class="orb orb--3"></div>
+
+    <!-- ─── Custom Alert Modal ─── -->
+    <div class="modal-overlay" id="modalOverlay">
+        <div class="modal">
+            <span class="modal__icon">📚</span>
+            <div class="modal__title"> FRANCE vS SPAIN! (0:2)</div>
+            <div class="modal__message">
+                កុំភ្លេចយកសៀវភៅតាមដានឲ្យគ្រូផងណា
+                <span class="emoji">🥰</span>
+            </div>
+            <button class="modal__btn" id="modalBtn">យល់ហើយ!</button>
+        </div>
+    </div>
+
+    <!-- ─── Main Container ─── -->
+    <div class="container" id="mainContainer">
+
+        <!-- Header -->
+        <header class="header">
+            <div class="header__icon"><img src="start.png" alt=""></div>
+            <h1 class="header__title">Hello</h1>
+            <p class="header__sub">
+                <span></span> <span></span>
+            </p>
+            <div class="divider"></div>
+        </header>
+
+        <!-- Grid: 1 Row × 4 Columns -->
+        <div class="grid">
+
+            <!-- Card 1 -->
+            <div class="card">
+                <span class="card__badge">០១</span>
+                <div class="card__circle">
+                    <img src="sak.png" alt="សិស្ស" loading="lazy" />
+                </div>
+                
+            </div>
+
+            <!-- Card 2 -->
+            <div class="card">
+                <span class="card__badge">០២</span>
+                <div class="card__circle">
+                    <img src="minh.png" alt="សិស្ស" loading="lazy" />
+                </div>
+               
+            </div>
+
+            <!-- Card 3 -->
+            <div class="card">
+                <span class="card__badge">០៣</span>
+                <div class="card__circle">
+                    <img src="na.png" alt="សិស្ស" loading="lazy" />
+                </div>
+              
+            </div>
+
+            <!-- Card 4 -->
+            <div class="card">
+                <span class="card__badge">០៤</span>
+                <div class="card__circle">
+                    <img src="sor.png" alt="សិស្ស" loading="lazy" />
+                </div>
+                
+            </div>
+
+        </div>
+
+        <!-- Click Hint -->
+         <button class="click-hint" type="button">Click me</button> 
+
+      
+
+    </div>
+
+    <!-- ─── JavaScript ─── -->
+    <script>
+        (function() {
+            'use strict';
+
+            const modalOverlay = document.getElementById('modalOverlay');
+            const modalBtn = document.getElementById('modalBtn');
+            const mainContainer = document.getElementById('mainContainer');
+
+            let hasShown = false;
+
+            // ── Show modal ──
+            function showModal() {
+                if (hasShown) return;
+                hasShown = true;
+                modalOverlay.classList.add('active');
+                document.body.style.overflow = 'hidden';
+            }
+
+            // ── Hide modal ──
+            function hideModal() {
+                modalOverlay.classList.remove('active');
+                document.body.style.overflow = '';
+            }
+
+            // ── First click anywhere → show modal ──
+            function handleFirstClick(e) {
+                // Ignore clicks on the modal itself or its children
+                if (modalOverlay.contains(e.target)) return;
+                showModal();
+                // Remove listener after first click
+                document.removeEventListener('click', handleFirstClick);
+            }
+
+            // ── Click on "យល់ហើយ!" button ──
+            modalBtn.addEventListener('click', function(e) {
+                e.stopPropagation();
+                hideModal();
+            });
+
+            // ── Click on overlay background (outside modal) to close ──
+            modalOverlay.addEventListener('click', function(e) {
+                if (e.target === modalOverlay) {
+                    hideModal();
+                }
+            });
+
+            // ── Keyboard: Escape to close ──
+            document.addEventListener('keydown', function(e) {
+                if (e.key === 'Escape' && modalOverlay.classList.contains('active')) {
+                    hideModal();
+                }
+            });
+
+            // ── Attach first-click listener ──
+            // We wait a tiny beat so the page is fully ready
+            setTimeout(() => {
+                document.addEventListener('click', handleFirstClick);
+            }, 100);
+
+            // ── Also allow the modal to be triggered by clicking the hint ──
+            // (but only if not shown yet)
+            const hint = document.querySelector('.click-hint');
+            if (hint) {
+                hint.addEventListener('click', function(e) {
+                    if (!hasShown) {
+                        showModal();
+                        document.removeEventListener('click', handleFirstClick);
+                    }
+                });
+            }
+
+            // ── Fallback: if user never clicks, but we want to show it anyway? ──
+            // We'll keep it as click-triggered only.
+
+            console.log('📚 សូមស្វាគមន៍! ចុចលើទំព័រដើម្បីមើលសារ');
+        })();
+    </script>
+
+</body>
+</html>
